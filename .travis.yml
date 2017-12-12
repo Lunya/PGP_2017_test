@@ -24,14 +24,24 @@ install:
   - npm install --prefix ./src/back-src/
   - src/front-src/node_modules/protractor/bin/webdriver-manager update
 script:
-  - npm start --prefix ../back-src/ &
-  - ng e2e
+  - true
 
 env:
   -  NODE_ENV=TEST NODE_PORT=3000 DB_SERVER_PORT=3306 MYSQL_TYPE=mysql MYSQL_HOST=localhost MYSQL_DATABASE=pgp_test MYSQL_USER=root MYSQL_PASSWORD=
 
 mysql:
   adapter: mysql2
-  username: root 
+  username: root
   encoding: utf8
   database: pgp_test
+
+before_deploy:
+  - ls
+  - cd ../
+  - ls
+  - zip -r release.zip back-src/ front-src/ -x "back-src/node_modules/*" "front-src/node_modules/*"
+deploy:
+  provider: releases
+  on:
+    tags: true
+  file: release.zip
