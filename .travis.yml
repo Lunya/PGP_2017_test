@@ -1,0 +1,37 @@
+sudo: required
+dist: trusty
+addons:
+  mariadb: '10.2'
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
+services:
+  - mysql
+language: node_js
+node_js:
+  - "stable"
+
+before_script:
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - cd src/front-src
+  - mysql -e 'create database pgp_test;'
+  - mysql -u root pgp_test < ../initdb_test/init_test.sql
+install:
+  - npm install --prefix ./src/front-src/
+  - npm install --prefix ./src/back-src/
+  - src/front-src/node_modules/protractor/bin/webdriver-manager update
+script:
+  - npm start --prefix ../back-src/ &
+  - ng e2e
+
+env:
+  -  NODE_ENV=TEST NODE_PORT=3000 DB_SERVER_PORT=3306 MYSQL_TYPE=mysql MYSQL_HOST=localhost MYSQL_DATABASE=pgp_test MYSQL_USER=root MYSQL_PASSWORD=
+
+mysql:
+  adapter: mysql2
+  username: root 
+  encoding: utf8
+  database: pgp_test
