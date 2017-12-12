@@ -1,0 +1,65 @@
+<div class="jumbotron" >
+	<div class="container" >
+		<h1 align="center">Workspace</h1>
+	</div>
+</div>
+
+<div class="container">
+	<nav class="navbar mb-3">
+		<form class="form-inline">
+			<button type="button" class="btn btn-light"
+					(click)="projectsView(true)">My projects</button>
+			<button type="button" class="btn btn-light"
+					(click)="projectsView(false)">Contributing projects</button>
+			<button type="button" class="btn btn-success"
+					(click)="newProject()"><i class="fa fa-plus-circle"></i> New project</button>
+		</form>
+	</nav>
+
+	<div *ngIf='projectsTableView' class="col-md-12">
+		<table class="table table-bordered table-striped table-hover">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Description</th>
+					<th>Begin</th>
+					<th>End</th>
+					<th>Repository</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let project of myProjects" [routerLink]="['/project',project.id]">
+					<td>{{ project.name }}</td>
+					<td>{{ project.description }}</td>
+					<td>{{ project.begin | date: 'dd/MM/yyyy' }}</td>
+					<td>{{ project.end | date: 'dd/MM/yyyy' }}</td>
+					<td>{{ project.url }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+  <div *ngIf='!projectsTableView' class="col-md-12">
+		<table class="table table-bordered table-striped table-hover">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Creator</th>
+					<th>Begin</th>
+					<th>End</th>
+					<th>Repository</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let project of otherProjects" [routerLink]="['/project',project.id]">
+					<td>{{ project.name }}</td>
+					<td>{{ project.creator }}</td>
+					<td>{{ project.begin | date: 'dd/MM/yyyy' }}</td>
+					<td>{{ project.end | date: 'dd/MM/yyyy' }}</td>
+					<td>{{ project.url }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+</div>

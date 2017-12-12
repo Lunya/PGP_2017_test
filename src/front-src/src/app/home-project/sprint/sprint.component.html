@@ -1,0 +1,114 @@
+<nav class="navbar mb-3 navbar-expand-md navbar-light bg-light">
+	<ul class="navbar-nav">
+		<li><button class="navbar-brand" type="button" class="btn btn-light"
+				(click)="taskView(false)">Backlog</button></li>
+		<li><button class="navbar-brand" type="button" class="btn btn-light"
+				(click)="taskView(true)">Tasks</button></li>
+	</ul>
+	<div class="collapse navbar-collapse">
+		<ul class="navbar-nav mr-auto">
+			<li class="date">
+				<button class="btn btn-link mr-sm-4" disabled>Begin - {{sprint.begin | date:'MM/dd/yyyy'}} </button>
+			</li>
+			<li></li>
+			<li></li>
+			<li *ngIf='!addTaskMode'><button type="button" class="btn btn-secondary mr-sm-4" (click)="onEdit()"><i class="fa fa-plus-circle"></i> Add task</button></li>
+			<li *ngIf='addTaskMode'><button type="button" class="btn btn-primary mr-sm-2" (click)="onConfirm()"><i class="fa fa-check-square"></i> Confirm</button></li>
+			<li *ngIf='addTaskMode'><button type="button" class="btn mr-sm-4" (click)="onBack()"><i class="fa fa-reply" aria-hidden="true"></i> Back</button></li>
+			<li></li>
+			<li></li>
+			<li class="date">
+				<button class="btn btn-link mr-sm-4" disabled> End - {{sprint.end | date:'MM/dd/yyyy'}}</button>
+			</li>
+		<!--</ul>
+		 <ul class="navbar-nav navbar-right"> -->
+			<li><button type="button" class="btn btn-default mr-sm-2" (click)="editSprint()"><i class="fa fa-edit"></i> Edit sprint</button></li>
+			<li><button type="button" class="btn btn-danger mr-sm-2" (click)="deleteSprint()"><i class="fa fa-trash"></i> Delete sprint</button></li>
+		 </ul>
+	</div>
+</nav>
+
+
+<div *ngIf='taskTableView' class="col-md-12">
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>ID </th>
+				<th>Description</th>
+				<th>Developer</th>
+				<th>Status</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngIf='addTaskMode' class="table-primary">
+				<td></td>
+				<td contenteditable='true' [(ngModel)]="currentTask.description" #description="ngModel"></td>
+				<td contenteditable='false' class="developers">
+					<select [(ngModel)]="currentTask.developer" #developer="ngModel">
+									<option></option>
+									<option *ngFor="let user of developers">{{user.name}}</option>
+				 </select>
+				</td>
+				<td contenteditable='true' [(ngModel)]="currentTask.state" #state="ngModel"></td>
+				<td>
+					<button class="btn" disabled><i class="fa fa-edit"></i> Edit</button>
+					<button class="btn btn-danger" disabled><i class="fa fa-times"></i></button>
+				</td>
+			</tr>
+			<ng-container *ngFor="let task of taskList">
+				<tr id="{{ 'TASK' + task.id  }}">
+					<td>{{task.id}}</td>
+					<td contenteditable='false' class="editable" [(ngModel)]="task.description" #description="ngModel">{{task.description}}</td>
+					<td contenteditable='false' class="editable" *ngIf='!task.onEdit' [(ngModel)]="task.developer" #difficulty="ngModel">{{task.developer}}</td>
+					<td contenteditable='false' class="developers" *ngIf='task.onEdit'>
+						<select [(ngModel)]="task.developer" #developer="ngModel">
+											<option></option>
+											<option *ngFor="let user of developers">{{user.name}}</option>
+									</select>
+					</td>
+					<td contenteditable='false' class="editable" [(ngModel)]="task.state" #priority="ngModel">{{task.state}}</td>
+					<td>
+						<button *ngIf='!task.onEdit' class="btn btn-default" (click)="onEditTaskRow(task)"><i class="fa fa-edit"></i> Edit</button>
+						<button *ngIf='!task.onEdit' class="btn btn-danger" (click)="onDeleteTaskRow(task)"><i class="fa fa-times"></i></button>
+						<button *ngIf='task.onEdit' class="btn" (click)="onBackTaskRow(task)"><i class="fa fa-reply"></i> Back</button>
+						<button *ngIf='task.onEdit' class="btn btn-primary" (click)="onConfirmTaskRow(task)"><i class="fa fa-check-square"></i> Confirm</button>
+					</td>
+				</tr>
+			</ng-container>
+		</tbody>
+	</table>
+</div>
+
+
+<div *ngIf='!taskTableView' class="col-md-12">
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Description</th>
+				<th>Difficulty</th>
+				<th>Priority</th>
+				<th>Status</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			<ng-container *ngFor="let us of sprintUSList">
+				<tr id="{{ 'US' + us.id  }}" >
+					<td (click)="selectUS(us)" align="center"><strong>{{us.id}}</strong></td>
+					<td contenteditable='false' class="editable description" [(ngModel)]="us.description" #description="ngModel">{{us.description}}</td>
+					<td contenteditable='false' class="editable" [(ngModel)]="us.difficulty" #difficulty="ngModel">{{us.difficulty}}</td>
+					<td contenteditable='false' [(ngModel)]="us.priority" #priority="ngModel">{{us.priority}}</td>
+					<td contenteditable='false' class="editable" [(ngModel)]="us.state" #state="ngModel">{{us.state}}</td>
+					<td>
+						<button *ngIf='!us.onEdit' class="btn btn-default" (click)="onEditUsRow(us)"><i class="fa fa-edit"></i> Edit</button>
+						<button *ngIf='!us.onEdit' class="btn btn-danger" (click)="onDeleteUsRow(us)"><i class="fa fa-times"></i> </button>
+						<button *ngIf='us.onEdit' class="btn" (click)="onBackUsRow(us)"><i class="fa fa-reply"></i> Back</button>
+						<button *ngIf='us.onEdit' class="btn btn-primary" (click)="onConfirmUsRow(us)"><i class="fa fa-check-square"></i> Confirm</button>
+					</td>
+				</tr>
+			</ng-container>
+		</tbody>
+	</table>
+</div>

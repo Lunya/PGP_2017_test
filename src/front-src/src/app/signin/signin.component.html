@@ -1,0 +1,51 @@
+<form class="form-signin" [formGroup]="signinForm" (ngSubmit)="login()" novalidate>
+	<h2 class="form-signin-heading">Please sign in</h2>
+
+	<div class="col mb-3">
+		<label for="email">Email address</label>
+		<input type="email" id="email" class="form-control" formControlName="email"
+			placeholder="Email address" required autofocus
+			[ngClass]="{
+				'is-invalid': (signinForm.controls['email'].invalid && signinForm.controls['email'].touched),
+				'is-valid': signinForm.controls['email'].touched}">
+		<!--<div *ngIf="f.submitted && !username.valid" class="help-block">Username is required</div>-->
+	</div>
+
+	<div class="col mb-3">
+		<label for="password">Password</label>
+		<input type="password" id="password" class="form-control"
+		formControlName="password" placeholder="Password" required
+			[ngClass]="{
+				'is-invalid': (signinForm.controls['password'].invalid && signinForm.controls['password'].touched),
+				'is-valid': signinForm.controls['password'].touched}">
+		<!--<div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>-->
+	</div>
+
+	<!--<div class="checkbox">
+		<label>
+			<input value="remember-me" type="checkbox"> Remember me
+		</label>
+	</div>-->
+	<button class="btn btn-primary btn-block" type="submit"
+		[disabled]="signinForm.invalid">Sign in</button>
+	<img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+</form>
+
+
+<!--
+<form class="form-signin" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+	<h2 class="form-signin-heading">Please sign in</h2>
+
+	<label for="login" class="sr-only">Email address</label>
+	<input id="login" class="form-control" placeholder="Email address" name="username" [(ngModel)]="model.username" #username="ngModel" required autofocus type="email">
+	<div *ngIf="f.submitted && !username.valid" class="help-block">Username is required</div>
+
+	<label for="password" class="sr-only">Password</label>
+	<input id="password" class="form-control" placeholder="Password" name="password" [(ngModel)]="model.password" #password="ngModel" required type="password">
+	<div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
+
+<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+<img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+<p>Form value : {{form.value | json}}</p>
+</form>
+-->

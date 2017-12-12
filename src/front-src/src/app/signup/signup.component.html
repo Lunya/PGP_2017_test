@@ -1,0 +1,52 @@
+<div class="jumbotron" >
+	<div class="row">
+		<div class="container" >
+			<h1 align="center">Sign up</h1>
+		</div>
+	</div>
+</div>
+
+
+<div class="container">
+	<form class="form-signin" [formGroup]="signupForm" (ngSubmit)="ngOnSubmit()" novalidate>
+		<h2 class="form-signin-heading">Please sign up</h2>
+
+		<div class="col mb-3">
+			<label for="email">Email</label>
+			<input type="email" id="email" class="form-control"
+				   formControlName="email" placeholder="Email" required autofocus
+				   [ngClass]="{
+				'is-invalid': (signupForm.controls['email'].invalid && signupForm.controls['email'].touched),
+				'is-valid': signupForm.controls['email'].touched}">
+		</div>
+		<div class="col mb-3">
+			<label for="name">Name</label>
+			<input type="text" id="name" class="form-control"
+				   formControlName="name" placeholder="User name" required
+				   [ngClass]="{
+				'is-invalid': (signupForm.controls['name'].invalid && signupForm.controls['name'].touched),
+				'is-valid': signupForm.controls['name'].touched}">
+		</div>
+		<div class="col mb-3">
+			<label for="password">Password</label>
+			<input type="password" id="password" class="form-control"
+				   formControlName="password" placeholder="Password" required
+				   [ngClass]="{
+				'is-invalid': (signupForm.controls['password'].invalid && signupForm.controls['password'].touched),
+				'is-valid': signupForm.controls['password'].touched}">
+		</div>
+		<div class="col mb-3">
+			<label for="verifPassword">Confirm password</label>
+			<input type="password" id="verifPassword" class="form-control"
+				   formControlName="verifPassword" placeholder="Confirm password" required
+				   [ngClass]="{
+				'is-invalid': (signupForm.controls['verifPassword'].invalid && signupForm.controls['verifPassword'].touched),
+				'is-valid': signupForm.controls['verifPassword'].touched}">
+		</div>
+
+
+		<button class="btn btn-lg btn-primary btn-block" type="submit"
+				[disabled]="signupForm.invalid">Sign in</button>
+		<img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+	</form>
+</div>

@@ -1,0 +1,27 @@
+Query NewUser:
+  INSERT INTO User (UserName, password,mail)
+  VALUES (@name, @password, @mail);
+
+Query NewProject:
+  INSERT INTO Project (ProjectName, description, git, debut, fin)
+  VALUES (@name, @description, @git, @debut, @fin)
+  AND INSERT INTO Backlog (project_id)
+  VALUES (SELECT id FROM Project WHERE (name = @name,debut = debut) )
+;
+
+Query ShowProject:
+  SELECT (ProjectName, description, git, debut, fin) WHERE id = @id FROM Projet
+  AND * IN(SELECT (us,id) WHERE backlog_id = @id FROM Backlog) ;
+
+Query addUS:
+  INSERT INTO Backlog (us, project_id, difficulty)
+  VALUES (@us, @ProjectID,@difficulty);
+
+Query deleteUS:
+  DELETE FROM Backlog WHERE id = @id;
+
+Query updateUS:
+  UPDATE Backlog SET us = @us, WHERE id = @id;
+
+Query updateDifficulty:
+  UPDATE Backlog SET difficulty = @difficulty, WHERE id = @id;

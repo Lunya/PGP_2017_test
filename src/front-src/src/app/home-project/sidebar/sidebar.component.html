@@ -1,0 +1,42 @@
+<div class="container">
+	<div class="row mt-3">
+		<div class="col">
+			<button #project (click)="onProjectSelected()" class="btn btn-lg btn-block btn-outline-primary">Project</button>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col">
+			<h2>Sprints</h2>
+			<!--<ul class="nav nav-pills flex-column">
+				<li class="nav-item"><a href="" class="nav-link">Lien 1</a></li>
+				<li class="nav-item"><a href="" class="nav-link active">Lien 2</a></li>
+				<li class="nav-item"><a href="" class="nav-link">Lien 3</a></li>
+				<li class="nav-item"><a href="" class="nav-link">Lien 4</a></li>
+			</ul>-->
+			<div class="list-group mb-3" #sprints>
+				<a *ngFor="let sprint of content.sprints; let i = index" class="list-group-item list-group-item-action" (click)="onSprintSelected($event, sprint)">Sprint {{ sprint.id }}</a>
+			</div>
+			<button type="button" class="btn btn-block btn-secondary" (click)="onNewSprint.emit()"><i class="fa fa-plus-circle"></i> New sprint</button>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col">
+			<h2>Users</h2>
+			<div class="list-group mb-3" #users>
+				<a *ngFor="let user of content.users" class="list-group-item list-group-item-action" (click)="onUserSelected($event, user)">
+					<div class="d-flex flex-row justify-content-between align-items-center">
+						<div>
+							<b>{{ user.name }}</b> <em class="text-muted">{{ user.email }}</em>
+						</div>
+						<div>
+							<i class="fa fa-minus-circle text-danger pl-2"></i>
+						</div>
+					</div>
+				</a>
+			</div>
+			<button type="button" class="btn btn-block btn-secondary" (click)="onUserAdd()"><i class="fa fa-plus-circle"></i> Add user</button>
+		</div>
+	</div>
+</div>

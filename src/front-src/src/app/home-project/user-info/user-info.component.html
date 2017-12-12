@@ -1,0 +1,65 @@
+<div class="container-fluid">
+	<div class="jumbotron py-2 mt-3 mb-1">
+		<h4 class="display-4">{{ user.name }}</h4>
+		<p class="lead">{{ user.email }}
+	</div>
+
+<nav class="navbar mb-3 navbar-expand-md navbar-light bg-light">
+	<ul class="navbar-nav">
+		<li class=" mr-sm-4"><button class="navbar-brand" type="button" class="btn btn-light"
+				(click)="taskView(true)">Current tasks for this project</button></li>
+		<li class=" mr-sm-4"><button class="navbar-brand" type="button" class="btn btn-light"
+				(click)="taskView(false)">All projects</button></li>
+	</ul>
+	<div class="collapse navbar-collapse">
+		<ul class="navbar-nav mr-auto">
+			<li><button type="button" class="btn btn-danger ml-l " (click)="deleteUser()" [disabled]="userStatus!=='OWNER'"><i class="fa fa-times"></i> Remove {{ user.name }} from this project</button></li>
+		 </ul>
+	</div>
+</nav>
+
+
+<div class="container">
+<div class="row">
+		<div *ngIf='taskTableView' class="col-md-12" >
+			<table align="left" class="table table-bordered table-striped table-hover">
+				<thead>
+					<tr>
+						<th>Task ID</th>
+						<th>Sprint</th>
+						<th>Description</th>
+						<th>State</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let task of userTasks">
+						<td>{{ task.id }}</td>
+						<td>{{ task.id_sprint }}</td>
+						<td>{{ task.description }}</td>
+						<td>{{ task.state }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div *ngIf='!taskTableView' class="col-md-12">
+			<table class="table table-bordered table-secondary table-hover">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Description</th>
+						<th>Repository</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let project of allProjects" [routerLink]="['/project',project.id]">
+						<td>{{ project.name }}</td>
+						<td>{{ project.description }}</td>
+						<td>{{ project.url }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+</div>

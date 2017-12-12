@@ -1,0 +1,47 @@
+version: "2.3"
+
+services:
+  mariadb: # by default, expose 3306 port
+    image: mariadb:10.2
+    restart: always
+    environment:
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: pgp
+    ports:
+      - "3316:3306"
+  backend:
+    build: ./back-src
+    image: pgp:back-dev
+    volumes:
+      - back-src:/home/node/app
+      - front-src:/home/node/front
+      - front-compiled:/home/node/dist
+      - /home/node/app/node_modules
+    environment:
+      - NODE_ENV=development
+    env_file:
+      - ./back-src/.env
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mariadb
+    #command: ["./wait-for-it.sh", "mariadb:3306", "-t", "30"]
+    init: true
+  frontend:
+    build: ./front-src
+    image: pgp:front-dev
+    volumes:
+      - front-compiled:/us/share/nginx/html
+    env_file:
+      - ./back-src/.env
+    ports:
+      - "4200:4200"
+    init: true
+    depends_on:
+      - backend
+
+volumes:
+  front-src:
+  front-compiled:
+  back-src:

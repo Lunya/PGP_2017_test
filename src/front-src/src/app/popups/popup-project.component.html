@@ -1,0 +1,74 @@
+<div class="modal-header">
+	<h4 class="modal-title">{{ action }} project</h4>
+	<button type="button" class="close" aria-label="close"
+			(click)="activeModal.dismiss('Cross click')">
+		<i class="fa fa-close"></i>
+	</button>
+</div>
+
+<form class="form-signin" [formGroup]="projectForm" (ngSubmit)="ngOnSubmit()" novalidate>
+	<div class="modal-body">
+		<div class="col mb-3">
+			<label for="name">Name</label>
+			<input type="text" id="name" class="form-control"
+				   formControlName="name" placeholder="Name of the project" required autofocus
+				   [ngClass]="{
+				'is-invalid': (projectForm.controls['name'].invalid && projectForm.controls['name'].touched),
+				'is-valid': projectForm.controls['name'].touched}">
+		</div>
+		<div class="col mb-3">
+			<label for="description">Description</label>
+			<textarea type="text" id="description" class="form-control"
+				   formControlName="description" placeholder="Project description"
+				   [ngClass]="{
+				'is-invalid': (projectForm.controls['description'].invalid && projectForm.controls['description'].touched),
+				'is-valid': projectForm.controls['description'].touched}"></textarea>
+		</div>
+		<div class="col mb-3">
+			<label for="url">Url</label>
+			<input type="text" id="url" class="form-control"
+				   formControlName="url" placeholder="Url repository"
+				   [ngClass]="{
+				'is-invalid': (projectForm.controls['url'].invalid && projectForm.controls['url'].touched),
+				'is-valid': projectForm.controls['url'].touched}">
+		</div>
+		<div class="col mb-3">
+			<label for="begin">Begin</label>
+			<div class="input-group">
+				<input type="date" id="begin" class="form-control"
+					   formControlName="begin" required
+					   ngbDatepicker #beginDate="ngbDatepicker"
+					   [(ngModel)]="beginDateModel"
+					   [ngClass]="{
+					'is-invalid': (projectForm.controls['begin'].invalid && projectForm.controls['begin'].touched),
+					'is-valid': projectForm.controls['begin'].touched}">
+				<button class="input-group-addon" type="button" (click)="beginDate.toggle()">
+					<i class="fa fa-calendar"></i>
+				</button>
+			</div>
+		</div>
+		<div class="col mb-3">
+			<label for="end">End</label>
+			<div class="input-group">
+				<input type="date" id="end" class="form-control"
+					   formControlName="end"
+					   ngbDatepicker #endDate="ngbDatepicker"
+					   [(ngModel)]="endDateModel"
+					   [ngClass]="{
+					'is-invalid': (projectForm.controls['end'].invalid && projectForm.controls['end'].touched),
+					'is-valid': projectForm.controls['end'].touched}">
+				<button class="input-group-addon" type="button" (click)="endDate.toggle()">
+					<i class="fa fa-calendar"></i>
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal-footer">
+		<button   *ngIf="project == undefined" class="btn btn-lg btn-primary btn-block" type="submit"
+				[disabled]="projectForm.invalid">Create project</button>
+
+				<button  *ngIf="project !== undefined" class="btn btn-lg btn-secondary btn-block" type="submit"
+						[disabled]="projectForm.invalid">Edit project</button>
+	</div>
+</form>

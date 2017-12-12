@@ -1,0 +1,5 @@
+<nav aria-label="Page navigation">
+	<ul class="pagination">
+		<li class="page-item" *ngFor="let link of links"><a routerLink="{{link.route}}" class="page-link">{{link.number}}</a></li>
+	</ul>
+</nav>

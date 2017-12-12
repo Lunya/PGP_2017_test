@@ -1,0 +1,63 @@
+table thead {
+				background-color: #f9f9f9;
+}
+
+/*nav {
+				box-shadow: 0px 5px 3px 0px #BBBBBB;
+}
+
+nav div ul {
+				margin-left: 150px;
+}
+
+nav div {
+				border-left: 1px solid #BBBBBB;
+}
+
+nav ul li {
+				margin-right: 30px;
+}
+
+nav ul li.date {
+				font-weight: bold;
+}
+
+table {
+				margin-top: 20px;
+				table-layout: fixed;
+}
+
+table thead {
+				background-color: #f9f9f9;
+				width: calc(100% - 1em);
+}
+
+table tbody {
+				table-layout: fixed;
+				display: block;
+				height: 700px;
+				overflow-y: scroll;
+				width: calc(100%);
+				margin-top: 10px;
+}
+
+thead, tbody tr {
+				display: table;
+				width: 100%;
+				table-layout: fixed;
+}
+
+table td, table th {
+				border-left: 1px solid #dddddd;
+				border-right: 1px solid #dddddd;
+}
+
+table td {
+				word-wrap: break-word;
+				width: 150px;
+				max-width: 150px;
+}
+
+table td.developers select {
+				max-width: 270px;
+}*/

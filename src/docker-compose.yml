@@ -1,0 +1,43 @@
+version: "2.3"
+
+services:
+  mariadb: # by default, expose 3306 port
+    image: mariadb:10.2
+    restart: always
+    volumes:
+      - ./initdb:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      #MYSQL_USER: karom
+      #MYSQL_PASSWORD: root
+      MYSQL_DATABASE: pgp
+    ports:
+      - "3316:3306"
+  backend:
+    build: ./back-src
+    image: pgp:back-dev
+    volumes:
+      - ./back-src:/home/node/app
+      - /home/node/app/node_modules
+    environment:
+      - NODE_ENV=development
+      - NODE_PORT=3000
+      - DB_SERVER_HOST=mariadb
+      - DB_SERVER_PORT=3306
+      - DB_SERVER_USER=root
+      - DB_SERVER_PASSWORD=root
+      - DB_NAME=pgp
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mariadb
+    #command: ["./wait-for-it.sh", "mariadb:3306", "-t", "30"]
+    init: true
+  frontend:
+    build: ./front-src
+    image: pgp:front-dev
+    volumes:
+      - ./front-src:/home/node/app
+    ports:
+      - "4200:4200"
+    init: true
