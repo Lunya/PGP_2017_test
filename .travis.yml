@@ -2,25 +2,25 @@ sudo: required
 dist: trusty
 language: node_js
 node_js:
-  - "stable"
+- stable
 before_script:
-  - cd src/front-src
+- cd src/front-src
 install:
-  - npm install --prefix ./src/back-src/
+- npm install --prefix ./src/back-src/
 script:
-  - true
-
+- true
 env:
-  -  NODE_ENV=TEST NODE_PORT=3000 DB_SERVER_PORT=3306 MYSQL_TYPE=mysql MYSQL_HOST=localhost MYSQL_DATABASE=pgp_test MYSQL_USER=root MYSQL_PASSWORD=
-
+- NODE_ENV=TEST NODE_PORT=3000 DB_SERVER_PORT=3306 MYSQL_TYPE=mysql MYSQL_HOST=localhost
+  MYSQL_DATABASE=pgp_test MYSQL_USER=root MYSQL_PASSWORD=
 before_deploy:
-  - ls
-  - cd ../
-  - ls
-  - zip -r release.zip back-src/ front-src/ -x "back-src/node_modules/*" "front-src/node_modules/*"
+- ls
+- cd ../
+- ls
+- zip -r release.zip back-src/ front-src/ -x "back-src/node_modules/*" "front-src/node_modules/*"
 deploy:
   provider: releases
-  api_key: "da9183a769d7d5964d49b60dd18ff3ef68d3c182"
-  on:
-    tags: true
+  api_key:
+    secure: RKqZcXAvTMxtYzhPP+YG5S6DxiVdaYc4p9yoFux4i7QLdh5a5JDWv019H/8r1IY6Oq7Fw4kBeKK+gWCars08M6HcILyzYi8ANIR0MJyZfu1FBeGdsLgGI2fTq8mGfztXaRZfV7HrQHWMQd0F7zsteAIJXZktHWjvrMilimAwQFa2shmXsEFpo1ZmL+bH62CXR3IC3Ntqki7lYwqA/w9xeVdZX0EVjopg64Asc4sPbGo6MFiJxgwQVdhDuSeGj+kawHbeLfxXHpG1UTqjeeg+J8LVhrhQCBnCb6RywMo3gLWuat7dto5T4470E9HX8mHUGq/yl8CrwJlZ8FFlHocMP/7qIUIv0ZTCYSSjVULV8TL/Qs+aVm2yIw2HsKbxPJZNQMSdnc/WyGF2UrKE+6hpcJlqrsGj+6rCTVJy4ZeWKNbandQWjrVsZJfoWxuUFtTGibL4fZNNFNRAKyjqTEAYU9W5HizLtVTnhQl0IyCM7ud3DbA1RVbWF0dlzNmiPXRRUBQnZOB2MWryc89pTgY1lL7G3I0ao7fr+UqCRjyIoRW9J5PcOvHS7+XKmT5l9zmV/+yd3pQjkiZLEZJKxNE7cmvOwWfw3345QW1bIZYIPFmkrRbmh1F+z7vDZpXKIoyJ2cas8T2+aVBQ5txAWzbMAEmnXpH59A7Z326dMU49AGo=
   file: release.zip
+  on:
+    repo: Lunya/PGP_2017_test
