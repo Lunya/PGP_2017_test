@@ -1,24 +1,9 @@
 sudo: required
 dist: trusty
-addons:
-  mariadb: '10.2'
-  apt:
-    sources:
-      - google-chrome
-    packages:
-      - google-chrome-stable
-services:
-  - mysql
 language: node_js
 node_js:
   - "stable"
 
-before_script:
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
-  - cd src/front-src
-  - mysql -e 'create database pgp_test;'
-  - mysql -u root pgp_test < ../initdb_test/init_test.sql
 install:
   - npm install --prefix ./src/front-src/
   - npm install --prefix ./src/back-src/
@@ -29,12 +14,6 @@ script:
 env:
   -  NODE_ENV=TEST NODE_PORT=3000 DB_SERVER_PORT=3306 MYSQL_TYPE=mysql MYSQL_HOST=localhost MYSQL_DATABASE=pgp_test MYSQL_USER=root MYSQL_PASSWORD=
 
-mysql:
-  adapter: mysql2
-  username: root
-  encoding: utf8
-  database: pgp_test
-
 before_deploy:
   - ls
   - cd ../
@@ -42,6 +21,7 @@ before_deploy:
   - zip -r release.zip back-src/ front-src/ -x "back-src/node_modules/*" "front-src/node_modules/*"
 deploy:
   provider: releases
+  api_key: "da9183a769d7d5964d49b60dd18ff3ef68d3c182"
   on:
     tags: true
   file: release.zip
