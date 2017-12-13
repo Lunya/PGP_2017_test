@@ -3,11 +3,10 @@ dist: trusty
 language: node_js
 node_js:
   - "stable"
-
+before_script:
+  - cd src/front-src
 install:
-  - npm install --prefix ./src/front-src/
   - npm install --prefix ./src/back-src/
-  - src/front-src/node_modules/protractor/bin/webdriver-manager update
 script:
   - true
 
